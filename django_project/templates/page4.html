@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <!-- Icons -->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+      <nav>
+         <div class="nav-wrapper teal">
+            <a href="#" class="brand-logo smmrg">Term Project</a>
+            <a href="#" data-target="mobile_links" class="sidenav-trigger">
+            <i class="material-icons">menu</i>
+            </a>
+            <ul class="right hide-on-med-and-down">
+               <li><a href="/page1/">Introduction</a></li>
+               <li><a href="/page2/">Installation Guide</a></li>
+               <li><a href="/page3/">Tutorial</a></li>
+               <li class="active"><a href="/page4/">Example</a></li>
+               <li><a href="/page5/">Conclusion</a></li>
+               <li><a href="/page6/">Credits & References</a></li>
+            </ul>
+         </div>
+      </nav>
+      <ul class="sidenav" id="mobile_links">
+         <li><a href="/page1/">Introduction</a></li>
+         <li><a href="/page2/">Installation Guide</a></li>
+         <li><a href="/page3/">Tutorial</a></li>
+         <li class="active"><a href="/page4/">Example</a></li>
+         <li><a href="/page5/">Conclusion</a></li>
+         <li><a href="/page6/">Credits & References</a></li>
+      </ul>
+      <script>
+         document.addEventListener('DOMContentLoaded', function() {
+               var elems = document.querySelectorAll('.sidenav');
+               var instances = M.Modal.init(elems);
+             });
+      </script>
+      <style>
+         .smmrg {
+         margin-left: 1.5%;
+         }
+      </style>
+      <title>Example</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   </head>
+   <body>
+      <div class="container">
+         <div class="card">
+            <h4 class="center-align">
+               Upload Image
+            </h4>
+            <p class="flow-text" style="margin: 10px;">
+               Using the form below, you can upload an image to the server. Fill in the form with information about your image and select the file to upload.
+            </p>
+            <form form enctype="multipart/form-data" method="post">
+               {% csrf_token %}
+               <div class="row">
+                  <div class="input-field col s6">
+                     {{ form.image_name }}
+                     <label for="image_name">Image Title</label>
+                  </div>
+                  <div class="input-field col s6">
+                     {{ form.author }}
+                     <label for="author">Author</label>
+                  </div>
+                  <div class="input-field col s12">
+                     {{ form.image_desc }}
+                     <label for="image_desc">Image Description</label>
+                  </div>
+                  <div class="input-field col s12">
+                     {{ form.image_file }}
+                  </div>
+                  <div class="input-field col s12 white-text">
+                     <button class="btn waves-effect waves-light" type="submit">Upload</button>
+                  </div>
+               </div>
+            </form>
+         </div>
+         {% if status == 1 %}
+         <div class="card green white-text">Upload Success!</div>
+         {% endif %}
+         {% if status == 2 %}
+         <div class="card red white-text">Upload Failed. Please select an image file.</div>
+         {% endif %}
+         <h4 class="center-align">Uploaded Images - Page <span id="pageNum">{{ pageNum }}</span></h4>
+         <div id="images" class="row">
+         	{% for image in imgList %}
+            <div class="col s12 m6 l4">
+               <div class="card">
+                  <div class="card-image"><img class="responsive-img activator flow-text" src="/media/{{ image.image_file }}" style="width:100%; height:14em;"></div>
+                  <div class="card-content">
+                     <div class="card-title activator">{{ image.image_name }}</div>
+                     <div>By {{ image.author }} - {{ image.upload_date }}</div>
+                  </div>
+                  <div class="card-reveal">
+                     <span class="card-title">{{ image.image_name }}<i class="material-icons right">close</i></span>
+                     <p>Uploaded by {{ image.author }} on {{ image.upload_date }}</p>
+                     <p class="flow-text">{{ image.image_desc }}</p>
+                  </div>
+               </div>
+            </div>
+            {% endfor %}
+         </div>
+         <div class="row">
+            <button class="btn waves-effect waves-light col s5 {{ disabled.prev }}" id="prevButton">Previous Page</button>
+            <button class="btn waves-effect waves-light col s5 offset-s2 {{ disabled.next }}" id="nextButton">Next Page</button>
+         </div>
+      </div>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <!-- Compiled and minified JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      <script>
+      	$(document).ready(function(){
+         	const slide_menu = document.querySelectorAll(".sidenav");
+         	M.Sidenav.init(slide_menu, {});
+
+            // Pages
+            var nextButton = document.getElementById("nextButton")
+            var prevButton = document.getElementById("prevButton")
+            var pageNum = parseInt(document.getElementById("pageNum").innerHTML)
+
+            nextButton.onclick = function(){
+            	window.location.href = "./?page=" + (pageNum + 1).toString()
+            }
+
+            prevButton.onclick = function(){
+            	window.location.href = "./?page=" + (pageNum - 1).toString()
+            }
+         })
+      </script>
+   </body>
+</html>

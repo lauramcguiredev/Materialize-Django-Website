@@ -1,0 +1,127 @@
+<!DOCTYPE>
+<html>
+<head>
+  <!-- Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <nav>
+    <div class="nav-wrapper teal">
+      <a href="#" class="brand-logo smmrg">Term Project</a>
+      <a href="#" data-target="mobile_links" class="sidenav-trigger">
+        <i class="material-icons">menu</i>
+      </a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/page1/">Introduction</a></li>
+        <li><a href="/page2/">Installation Guide</a></li>
+        <li><a href="/page3/">Tutorial</a></li>
+        <li><a href="/page4/">Example</a></li>
+        <li class="active"><a href="/page5/">Conclusion</a></li>
+        <li><a href="/page6/">Credits & References</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="sidenav" id="mobile_links">
+    <li><a href="/page1/">Introduction</a></li>
+    <li><a href="/page2/">Installation Guide</a></li>
+    <li><a href="/page3/">Tutorial</a></li>
+    <li><a href="/page4/">Example</a></li>
+    <li class="active"><a href="/page5/">Conclusion</a></li>
+    <li><a href="/page6/">Credits & References</a></li>
+  </ul>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Modal.init(elems);
+    });
+  </script>
+  <style>
+    img { float: right; }
+    .mrg {
+      margin-right: 5%;
+      margin-left: 5%;
+    }
+    .smmrg {
+      margin-left: 1.5%;
+    }
+  </style>
+  <title>Conclusion</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+  <div class="col s12 m7">
+      <h2 class="header mrg">Conclusion</h2>
+      <div class="card horizontal mrg">
+        <div class="card-image">
+          <img src="https://i.ytimg.com/vi/-oQvMHpKkms/maxresdefault.jpg" alt="django" width="200" height="200">
+        </div>
+        <div class="card-stacked">
+          <div class="card-content">
+            <span class="card-title">Django</span>
+            <p>The back-end framework we picked was Django. Overall, despite some
+              difficulties, Django exceeded our expectations. Using Digital Ocean’s
+              one click Django Droplet made the installation process very simple.
+              Creating pages with Django is not difficult, however, you do need
+              to learn the "Django way" of doing things. Django uses "views" to
+              access "templates" (where pages should be held) and makes developers
+              choose their own custom URLs. Therefore, making pages is simple
+              but there is more back end configuration that goes with it than
+              with many other frameworks. Django abstracts out and streamlines a
+              lot of processes. A example of this is how Django has created simple
+              commands which load and commit data with a database without having
+              to use SQL. In this way, yes there is a big learning curve to using Django.
+              However, once you learn its way of doing things, they are usually
+              faster and easier than their regular HTML/CSS/Javascript/PHP equivalent.
+              Throughout this project we only just scratched the surface of the
+              functionalites Django offers. There is much to learn such as how it handles
+              context processors, complex queries, fixtures, etc. The Django
+              website has detailed documentation to make the learning process
+              easier. We are happy that we took the time to start learning about
+              this powerful framework. We wish we had started learning
+              and researching Django earlier as there was more of a learning curve
+              than we expected. Overall, we are happy with what we accomplished would
+              enjoy working with Django more in the future.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="col s12 m7">
+      <div class="card horizontal mrg">
+        <div class="card-image">
+          <img src="https://www.41studio.com/blog/wp-content/uploads/2018/06/materialize-banner-2.png" alt="materialize" width="200" height="200">
+        </div>
+        <div class="card-stacked">
+          <div class="card-content">
+            <span class="card-title">Materialize</span>
+            <p>Materialize is the front end framework we selected. After working with
+              Materialize with found that it met our expectation of being easy to
+              use and producing a clean and visually pleasing website. We found
+              creating pages with Materialize was very straight-forward because
+              of the clear documentation on their website. Materialize was also
+              very easy to access and use with the CDN they provide. There wasn't
+              much of a learning curve in using this framework. If you are already
+              familiar with HTML, CSS, and Javascript working with Materialize comes
+              quickly and easily. They have many templates you can follow and customize
+              to meet your needs available on their website. Using Materialize's
+              built in components and features is much easier than building comparable
+              ones from scratch using HTML/CSS/Javascript/PHP. If we were to do
+              this project over again it would be nice to utilize more of their
+              built in features such as their carousel. We found Materialize made
+              the development process simplified and produced attractive results.
+              We are glad we chose to work with this framework.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <!-- Compiled and minified JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    const slide_menu = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(slide_menu, {});
+  </script>
+</body>
+</html>

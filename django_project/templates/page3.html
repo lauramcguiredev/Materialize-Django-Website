@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <!-- Icons -->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+      <nav>
+         <div class="nav-wrapper teal">
+            <a href="#" class="brand-logo smmrg">Term Project</a>
+            <a href="#" data-target="mobile_links" class="sidenav-trigger">
+            <i class="material-icons">menu</i>
+            </a>
+            <ul class="right hide-on-med-and-down">
+               <li><a href="/page1/">Introduction</a></li>
+               <li><a href="/page2/">Installation Guide</a></li>
+               <li class="active"><a href="/page3/">Tutorial</a></li>
+               <li><a href="/page4/">Example</a></li>
+               <li><a href="/page5/">Conclusion</a></li>
+               <li><a href="/page6/">Credits & References</a></li>
+            </ul>
+         </div>
+      </nav>
+      <ul class="sidenav" id="mobile_links">
+         <li><a href="/page1/">Introduction</a></li>
+         <li><a href="/page2/">Installation Guide</a></li>
+         <li class="active"><a href="/page3/">Tutorial</a></li>
+         <li><a href="/page4/">Example</a></li>
+         <li><a href="/page5/">Conclusion</a></li>
+         <li><a href="/page6/">Credits & References</a></li>
+      </ul>
+      <script>
+         document.addEventListener('DOMContentLoaded', function() {
+           var elems = document.querySelectorAll('.sidenav');
+           var instances = M.Modal.init(elems);
+         });
+      </script>
+      <style>
+         img { float: right; }
+         .mrg {
+         margin-right: 5%;
+         margin-left: 5%;
+         }
+         .smmrg {
+         margin-left: 1.5%;
+         }
+
+         body {
+                display: inline-block;
+                        word-break: break-word;
+         }
+      </style>
+      <title>Tutorial</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   </head>
+   <body>
+   {% verbatim %}
+      <div class="mrg">
+         <h2 class="header">Tutorial - Creating an Image Sharing Page</h2>
+         <p class="flow-text">This tutorial will show you how to create a simple image sharing page, which will allow users to upload images that can be viewed by any visitor to the page. This tutorial assumes that you already have Django and Materialize set up properly, and that you are familiar with HTML, CSS, and Python.</p>
+<p class="flow-text">We will first start with setting up the back-end (Django), and then the front-end (Materialize). Read the comments on the code if you are unsure what something does.</p>
+<h3>Part 1 - Django:</h3>
+         <div class="card horizontal">
+            <div class="card-stacked">
+               <div class="card-content">
+                  <span class="card-title">Step 1: Add settings to settings.py</span>
+                  <p>Go to /home/django/django_project/django_project/settings.py and add the follow settings below, one per line. This will help set up the file permissions for the uploaded images, and the location where they will be stored in.</p>
+               </div>
+               <div class="card mrg grey lighten-2">
+                  <pre style="white-space: pre-wrap;">FILE_UPLOAD_PERMISSIONS = 0o644 # Uploaded images will have rw-r--r-- permission so they can be viewed.
+MEDIA_URL = '/media/' # So you can do www.yourwebsite.com/media/ to access images
+MEDIA_ROOT = os.path.join(BASE_DIR, 'django_project/media') # Storage location</pre>
+               </div>
+            </div>
+         </div>
+         <div class="card horizontal">
+            <div class="card-stacked">
+               <div class="card-content">
+                  <span class="card-title">Step 2: Creating the upload form class</span>
+                  <p>Django allows you to represent your forms as Python classes. This allows you to: easily access the form data, create the input elements automatically, and perform form validation through the server with one function call. We will now create the class for the image uploading form. Create a file called "forms.py" in /home/django/django_project/my_app/ and put the code below in it.</p>
+               </div>
+               <div class="card mrg grey lighten-2">
+                  <pre style="white-space: pre-wrap;">from django import forms
+
+class UploadForm(forms.Form):
+    author = forms.CharField(label = "Author", max_length = 50) # Text input field
+    image_name = forms.CharField(label = "Image Title", max_length = 50) # Text input field
+    image_desc = forms.CharField(label = "Image Description", max_length = 200) # Text input field
+    image_file = forms.ImageField() # Field for user to upload file</pre>
+               </div>
+            </div>
+         </div>
+         <div class="card horizontal">
+            <div class="card-stacked">
+               <div class="card-content">
+                  <span class="card-title">Step 3: Creating the image model class</span>
+                  <p>Information that is stored in a database can be represented using Models in Django. This simplifys the process of storing and retrieving information in a database. Since we will be storing information about the uploaded images in the database, we will create a model class for it. Put the following in /home/django/django_project/my_app/models.py</p>
+               </div>
+               <div class="card mrg grey lighten-2">
+                  <pre style="white-space: pre-wrap;">from django.db import models
+
+class Image(models.Model): # The image model. Inheriting models.Model
+    author = models.CharField(max_length = 50)
+    image_name = models.CharField(max_length = 50)
+    image_desc = models.CharField(max_length = 200)
+    image_file = models.ImageField(upload_to = "images/") # Uploads to /media/images/
+    upload_date = models.DateTimeField(auto_now_add = True) # Date added automatically when image uploaded</pre>
+               </div>
+            </div>
+         </div>
+         <div class="card horizontal">
+            <div class="card-stacked">
+               <div class="card-content">
+                  <span class="card-title">Step 4: Creating the view method</span>
+                  <p>Views in Django control how information is presented to the user when they access a url. We will set up a view to display the upload form and the currently uploaded images to the user. Put the following in /home/django/django_project/my_app/views.py</p>
+               </div>
+               <div class="card mrg grey lighten-2">
+                  <pre style="white-space: pre-wrap;">from .forms import UploadForm # Import the upload form you created
+from .models import Image # Import the model you created
+
+def imageView(request, *args, **kwargs):
+        status = 0 # Status code
+        if request.method == "POST": # If the user is submitting the form (POST Request)
+                uploader = UploadForm(request.POST, request.FILES) # Creates a form object with the data the user inputted
+                if uploader.is_valid(): # Form validation
+                        # Code below will create an Image model and fill in its fields with the form data
+                        newImg = Image()
+                        newImg.image_file = request.FILES["image_file"]
+                        newImg.author = uploader.cleaned_data["author"]
+                        newImg.image_name = uploader.cleaned_data["image_name"]
+                        newImg.image_desc = uploader.cleaned_data["image_desc"]
+                        newImg.save() # Saves the new image to the database
+                        status = 1 # Success status
+                else:
+                        status = 2 # Error status
+        else:
+                uploader = UploadForm() # Default to blank form
+
+        # Gets current images from database. Reverses it so it's displayed from descending upload date.
+        allImgs = list(Image.objects.all())
+        allImgs.reverse()
+
+        # Handle page system
+        pageNum = request.GET.get("page")
+        if pageNum == None or not pageNum.isdigit() or int(pageNum) &lt; 1:
+                pageNum = 1
+        else:
+                pageNum = int(pageNum)
+        pageImgs = allImgs[(pageNum-1)*12:pageNum*12] # Max 12 images per page
+
+        # Determines if the prev/next buttons should be disabled
+        prevDisabled = "disabled" if pageNum == 1 else ""
+        nextDisabled = "disabled" if pageNum*12 &gt;= len(allImgs) else ""
+        disabled = {"prev" : prevDisabled, "next" : nextDisabled}
+
+        # Actually displays the page template to the user. We will create images.html in the next part with Materialize.
+        return render(request, "images.html", {"form":uploader, "imgList":pageImgs, "pageNum":pageNum, "disabled":disabled, "status":status})</pre>
+               </div>
+            </div>
+         </div>
+         <div class="card horizontal">
+            <div class="card-stacked">
+               <div class="card-content">
+                  <span class="card-title">Step 5: Adding the view to urls.py</span>
+                  <p>You have to add your view to urls.py in /home/django/django_project/urls.py for the ability for your view to be shown. Add this entry to the urlpatterns array in urls.py. Note that in our website we have used 'page4/' instead of 'images/'.</p>
+               </div>
+               <div class="card mrg grey lighten-2">
+                  <pre style="white-space: pre-wrap;">url(r'^images/', views.imageView) # www.yoursite.com/images/ will be handled by your views.imageView function.</pre>
+               </div>
+            </div>
+         </div>
+         <div class="card horizontal">
+            <div class="card-stacked">
+               <div class="card-content">
+                  <span class="card-title">Step 6: Creating an admin page</span>
+                  <p>Obviously you would need an admin page so site moderators can delete inappropriate images. Put the following code in /home/django/django_project/my_app/admin.py. This will create an admin page so that you can manage the Image model's database entries.</p>
+               </div>
+               <div class="card mrg grey lighten-2">
+                  <pre style="white-space: pre-wrap;">from .models import Image
+
+admin.site.register(Image) # Registers admin page for the model.</pre>
+               </div>
+            </div>
+         </div>
+         <h3>Part 2 - Materialize:</h3>
+         <div class="card horizontal">
+            <div class="card-stacked">
+               <div class="card-content">
+                  <span class="card-title">Step 1: Creating the form template</span>
+                  <p>We will now create images.html with Materialize. First we will design the form. We used Materalize's grid system to set the positions of where the input elements will be. Notice the various {{ form.FIELD }} in the html code. Django will replace it with the corresponding input element of the form. We also need the {% csrf_token %} so Django can properly process the form.</p><br>
+                  <p>This makes use of Cards in Materialize, which will create nice looking cards to hold your information in. It also uses the 'flow-text' class to make text responsive.</p>
+               </div>
+               <div class="card mrg grey lighten-2">
+                  <pre style="white-space: pre-wrap;">
+         &lt;div class=&quot;card&quot;&gt;
+            &lt;h4 class=&quot;center-align&quot;&gt;
+               Upload Image
+            &lt;/h4&gt;
+            &lt;p class=&quot;flow-text&quot; style=&quot;margin: 10px;&quot;&gt;
+               Using the form below, you can upload an image to the server. Fill in the form with information about your image and select the file to upload.
+            &lt;/p&gt;
+            &lt;form form enctype=&quot;multipart/form-data&quot; method=&quot;post&quot;&gt;
+               {% csrf_token %}
+               &lt;div class=&quot;row&quot;&gt;
+                  &lt;div class=&quot;input-field col s6&quot;&gt;
+                     {{ form.image_name }}
+                     &lt;label for=&quot;image_name&quot;&gt;Image Title&lt;/label&gt;
+                  &lt;/div&gt;
+                  &lt;div class=&quot;input-field col s6&quot;&gt;
+                     {{ form.author }}
+                     &lt;label for=&quot;author&quot;&gt;Author&lt;/label&gt;
+                  &lt;/div&gt;
+                  &lt;div class=&quot;input-field col s12&quot;&gt;
+                     {{ form.image_desc }}
+                     &lt;label for=&quot;image_desc&quot;&gt;Image Description&lt;/label&gt;
+                  &lt;/div&gt;
+                  &lt;div class=&quot;input-field col s12&quot;&gt;
+                     {{ form.image_file }}
+                  &lt;/div&gt;
+                  &lt;div class=&quot;input-field col s12 white-text&quot;&gt;
+                     &lt;button class=&quot;btn waves-effect waves-light&quot; type=&quot;submit&quot;&gt;Upload&lt;/button&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+            &lt;/form&gt;
+         &lt;/div&gt;</pre>
+               </div>
+            </div>
+         </div>
+         <div class="card horizontal">
+            <div class="card-stacked">
+               <div class="card-content">
+                  <span class="card-title">Step 2: Status code display messages</span>
+                  <p>We will now create status messages to tell the user if their upload is successful. Put the following below the form you created above. Those if statements are processed by Django in the view function you created.</p>
+               </div>
+               <div class="card mrg grey lighten-2">
+                  <pre style="white-space: pre-wrap;">{% if status == 1 %}
+         &lt;div class=&quot;card green white-text&quot;&gt;Upload Success!&lt;/div&gt;
+{% endif %}
+{% if status == 2 %}
+         &lt;div class=&quot;card red white-text&quot;&gt;Upload Failed. Please select an image file.&lt;/div&gt;
+{% endif %}</pre>
+               </div>
+            </div>
+            <div class="card-image">
+                 <img src="/static/images/statusMsgs.PNG">
+                </div>
+         </div>
+         <div class="card horizontal">
+            <div class="card-stacked">
+               <div class="card-content">
+                  <span class="card-title">Step 3: Uploaded images display</span>
+                  <p>Now, we create the part of the html where the uploaded images are displayed. Django will process the for loop you see below and make an image card for all images. For each image, Django will fill in the parts with {{ image.FIELD_NAME }} with the value of the corresponding field of that image. It will also fill in the page number. Put this below the status messages you created above.</p>
+               </div>
+               <div class="card mrg grey lighten-2">
+                  <pre style="white-space: pre-wrap;">&lt;h4 class=&quot;center-align&quot;&gt;Uploaded Images - Page &lt;span id=&quot;pageNum&quot;&gt;{{ pageNum }}&lt;/span&gt;&lt;/h4&gt;
+         &lt;div id=&quot;images&quot; class=&quot;row&quot;&gt;
+                {% for image in imgList %}
+            &lt;div class=&quot;col s12 m6 l4&quot;&gt;
+               &lt;div class=&quot;card&quot;&gt;
+                  &lt;div class=&quot;card-image&quot;&gt;&lt;img class=&quot;responsive-img activator&quot; src=&quot;/media/{{ image.image_file }}&quot; style=&quot;width:100%; height:250px;&quot;&gt;&lt;/div&gt;
+                  &lt;div class=&quot;card-content&quot;&gt;
+                     &lt;div class=&quot;card-title activator&quot;&gt;{{ image.image_name }}&lt;/div&gt;
+                     &lt;div&gt;By {{ image.author }} - {{ image.upload_date }}&lt;/div&gt;
+                  &lt;/div&gt;
+                  &lt;div class=&quot;card-reveal&quot;&gt;
+                     &lt;span class=&quot;card-title&quot;&gt;{{ image.image_name }}&lt;i class=&quot;material-icons right&quot;&gt;close&lt;/i&gt;&lt;/span&gt;
+                     &lt;p&gt;Uploaded by {{ image.author }} on {{ image.upload_date }}&lt;/p&gt;
+                     &lt;p class=&quot;flow-text&quot;&gt;{{ image.image_desc }}&lt;/p&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+            &lt;/div&gt;
+            {% endfor %}
+         &lt;/div&gt;</pre>
+               </div>
+            </div>
+         </div>
+         <div class="card horizontal">
+            <div class="card-stacked">
+               <div class="card-content">
+                  <span class="card-title">Step 4: Page system buttons</span>
+                  <p>Finally, we will create a page system to go through the pages of uploaded images. This will use both Materialize and JavaScript. First put the following below the div you created above. This will create the buttons. The Django view function will replace the {{ disabled.prev }} and {{ disabled.next }} with "disabled" if the button is to be disabled.</p>
+               </div>
+               <div class="card mrg grey lighten-2">
+                  <pre style="white-space: pre-wrap;">&lt;div class=&quot;row&quot;&gt;
+            &lt;button class=&quot;btn waves-effect waves-light col s5 {{ disabled.prev }}&quot; id=&quot;prevButton&quot;&gt;Previous Page&lt;/button&gt;
+            &lt;button class=&quot;btn waves-effect waves-light col s5 offset-s2 {{ disabled.next }}&quot; id=&quot;nextButton&quot;&gt;Next Page&lt;/button&gt;
+&lt;/div&gt;</pre>
+               </div>
+            </div>
+            <div class="card-image">
+               <img src="/static/images/prevNext.PNG">
+                </div>
+         </div>
+         <div class="card horizontal">
+            <div class="card-stacked">
+               <div class="card-content">
+                  <span class="card-title">Step 5: Page system code</span>
+                  <p>Put this script tag below the page buttons you made above. This will make the prev/next buttons functional. It will send a query string parameter named 'page' which will be read by Django in your view function.</p>
+               </div>
+               <div class="card mrg grey lighten-2">
+                  <pre style="white-space: pre-wrap;">&lt;script&gt;
+        $(document).ready(function(){
+            // Pages
+            var nextButton = document.getElementById(&quot;nextButton&quot;)
+            var prevButton = document.getElementById(&quot;prevButton&quot;)
+            var pageNum = parseInt(document.getElementById(&quot;pageNum&quot;).innerHTML)
+
+            // Next page when clicked
+            nextButton.onclick = function(){
+                window.location.href = &quot;./?page=&quot; + (pageNum + 1).toString()
+            }
+
+            // Previous page when clicked
+            prevButton.onclick = function(){
+                window.location.href = &quot;./?page=&quot; + (pageNum - 1).toString()
+            }
+         })
+&lt;/script&gt;</pre>
+               </div>
+            </div>
+         </div>
+         <p class="flow-text">You are now finished. To restart Django and apply the changes you have made to the Python scripts, run the following command:</p>
+         <div class="card mrg grey lighten-2">sudo systemctl restart gunicorn</div>
+         <p class="flow-text">Your page should now be live at www.yoursite.com/images/</p>
+      </div>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <!-- Compiled and minified JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      <script>
+         const slide_menu = document.querySelectorAll(".sidenav");
+         M.Sidenav.init(slide_menu, {});
+      </script>
+      {% endverbatim %}
+   </body>
+</html>

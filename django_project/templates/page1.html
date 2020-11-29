@@ -1,0 +1,136 @@
+<!DOCTYPE>
+<html>
+<head>
+  <!-- Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <nav>
+    <div class="nav-wrapper teal">
+      <a href="#" class="brand-logo smmrg">Term Project</a>
+      <a href="#" data-target="mobile_links" class="sidenav-trigger">
+        <i class="material-icons">menu</i>
+      </a>
+      <ul class="right hide-on-med-and-down">
+        <li class="active"><a href="/page1/">Introduction</a></li>
+        <li><a href="/page2/">Installation Guide</a></li>
+        <li><a href="/page3/">Tutorial</a></li>
+        <li><a href="/page4/">Example</a></li>
+        <li><a href="/page5/">Conclusion</a></li>
+        <li><a href="/page6/">Credits & References</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="sidenav" id="mobile_links">
+    <li class="active"><a href="/page1/">Introduction</a></li>
+    <li><a href="/page2/">Installation Guide</a></li>
+    <li><a href="/page3/">Tutorial</a></li>
+    <li><a href="/page4/">Example</a></li>
+    <li><a href="/page5/">Conclusion</a></li>
+    <li><a href="/page6/">Credits & References</a></li>
+  </ul>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Modal.init(elems);
+    });
+  </script>
+  <style>
+  .mrg {
+    margin-right: 5%;
+    margin-left: 5%;
+  }
+  .smmrg {
+    margin-left: 1.5%;
+  }
+  .lst {
+    list-style-type: circle !important;
+  }
+  </style>
+  <title>Introduction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+  <div class="col s12 m7 mrg">
+    <h2 class="header">Materialize</h2>
+    <div class="card horizontal" class="mrg">
+      <div class="card-stacked">
+        <div class="card-content">
+          <span class="card-title">About</span>
+          <ul class="smmrg">
+          <li class="lst">Materialize is a popular front end framework using CSS
+            and Javascript.</li>
+          <li class="lst">Some websites using Materialize: paycomonline.com,
+            pricechanges.xfinity.com, and lynx-qa.wnba.com.</li>
+          </ul>
+          <span class="card-title">Strengths</span>
+          <ul class="smmrg">
+          <li class="lst">Great for new developers looking to create a great looking
+            website because it enforces material design concepts.</li>
+          <li class="lst">Good for developers looking to easily produce responsive apps.</li>
+          </ul>
+          <span class="card-title">Weaknesses</span>
+          <ul class="smmrg">
+          <li class="lst">Uses large file sizes which can give it more overhead
+            than desired.</li>
+          <li class="lst">Poor compatibility with Internet Explorer versions 10 and greater.
+            Possible poor cross compatibility with other browsers down the line
+            because it doesn’t use Flexbox.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m7 mrg">
+    <h2 class="header">Django</h2>
+    <div class="card horizontal" class="mrg">
+      <div class="card-stacked">
+        <div class="card-content">
+          <span class="card-title">About</span>
+          <ul class="smmrg">
+            <li class="lst">Django is a very widely used, python based, back-end
+              framework.</li>
+            <li class="lst">Some popular websites running off Django:
+              Disqus, Instagram, Youtube, Bitbucket, and Dropbox.</li>
+          </ul>
+          <span class="card-title">Strengths</span>
+          <ul class="smmrg">
+          <li class="lst">Django allows management of all its application's data
+            using only Python. This is possible because Django uses an object-relational
+            mapper to transform database structures into Python classes.</li>
+          <li class="lst">The framework comes set up with many features including user
+            authentication, content management, and much more.</li>
+          <li class="lst">Has great, built in security protocols so developers
+            don't need to be concerned with common security vulnerabilities.</li>
+          <li class="lst">Scales easily due to its composite architecture. Definitively
+            separated components mean hardware resources can be added as needed
+            to any level.</li>
+          <li class="lst">Django makes the development process much more streamlined and fast-
+          great for developers working with a strict deadline.</li>
+          <li class="lst">Great for all types of projects, from small to large,
+            because of its scalability and robust features.</li>
+          <li class="lst">Great for developers who value organization because it
+            encourages tidy and logical design.</li>
+          </ul>
+          <span class="card-title">Weaknesses</span>
+          <ul class="smmrg">
+            <li class="lst">Uses complicated syntax for its URL routing patterns.</li>
+            <li class="lst">Has a monolithic structure which forces its users to follow
+              specific rules and takes away flexibility.</li>
+            <li class="lst">Commitment to backwards compatibility means more overhead as time goes on.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <!-- Compiled and minified JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    const slide_menu = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(slide_menu, {});
+    </script>
+  </body>
+</html>

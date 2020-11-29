@@ -1,0 +1,154 @@
+<!DOCTYPE>
+<html>
+<head>
+  <!-- Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <nav>
+    <div class="nav-wrapper teal">
+      <a href="#" class="brand-logo smmrg">Term Project</a>
+      <a href="#" data-target="mobile_links" class="sidenav-trigger">
+        <i class="material-icons">menu</i>
+      </a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/page1/">Introduction</a></li>
+        <li class="active"><a href="/page2/">Installation Guide</a></li>
+        <li><a href="/page3/">Tutorial</a></li>
+        <li><a href="/page4/">Example</a></li>
+        <li><a href="/page5/">Conclusion</a></li>
+        <li><a href="/page6/">Credits & References</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="sidenav" id="mobile_links">
+    <li><a href="/page1/">Introduction</a></li>
+    <li class="active"><a href="/page2/">Installation Guide</a></li>
+    <li><a href="/page3/">Tutorial</a></li>
+    <li><a href="/page4/">Example</a></li>
+    <li><a href="/page5/">Conclusion</a></li>
+    <li><a href="/page6/">Credits & References</a></li>
+  </ul>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Modal.init(elems);
+    });
+  </script>
+  <style>
+    img { float: right; }
+    .mrg {
+      margin-right: 5%;
+      margin-left: 5%;
+    }
+    .smmrg {
+      margin-left: 1.5%;
+    }
+  </style>
+  <title>Installation Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+  <div class="col s12 m7 mrg">
+    <h2 class="header">Django Installation</h2>
+    <div class="card horizontal" class="mrg">
+      <div class="card-stacked">
+        <div class="card-content">
+          <span class="card-title">Step 1: Create Account with Digital Ocean</span>
+          <p>The first step to deploying your website is to sign up with a web host.
+          For this tutorial we will be using Digital Ocean as our host provider.
+          Go to <a href="https://digitalocean.com">https://digitalocean.com</a> and sign up using one of the suggested methods
+          on their homepage.</p>
+        </div>
+      </div>
+      <div class="card-image">
+        <img src="/static/images/step1.jpg">
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m7 mrg">
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <span class="card-title">Step 2: Navigate to Create Droplet</span>
+          <p>Next is to deploy a droplet, this is what Digital Ocean calls their
+          virtual machines. Click on the green "Create" tab and select "Droplets" from
+          the drop down menu.</p>
+        </div>
+      </div>
+      <div class="card-image">
+        <img src="/static/images/step2.jpg">
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m7 mrg">
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <span class="card-title">Step 3: Select Django Droplet</span>
+          <p>On the "Create Droplets" page under the "Choose an image" heading
+          click on "Marketplace". Then click on "See all Marketplace Apps". Here
+          you search for the "Django" framework. Click on the "Django" framework
+          and finally select "Create Django Droplet". From here you are taken back
+          to the "Create Droplets" page.</p>
+        </div>
+      </div>
+      <div class="card-image">
+        <img src="/static/images/step3.jpg">
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m7 mrg">
+    <div class="card horizontal" class="mrg">
+      <div class="card-stacked">
+        <div class="card-content">
+          <span class="card-title">Step 4: Configure and Create Droplet</span>
+          <p>Go through the rest of the instructions
+          and select the options which suit your need. Once you have finished configuring
+          your droplet scroll to the bottom of the page and click "Create Droplet". Just
+          like that you have create a fully installed, configured, and ready to go
+          Django framework.</p>
+        </div>
+      </div>
+      <div class="card-image">
+        <img src="/static/images/step4new.jpg">
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m7 mrg">
+    <h2 class="header">Materialize Setup</h2>
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <span class="card-title">Step 1: Copy the CDN</span>
+          <p>Navigate to <a href="https://materializecss.com/getting-started.html">https://materializecss.com/getting-started.html</a> and scroll down to the section named CDN. Put the compiled and minified CSS in the
+            header of your HTML files. Put the compiled and minified Javascript
+            at the end of the body tag to optimize loading times. Including
+            the latest CDN allows you full access to all of the features Materialize
+            offers.</p><br>
+            <p>This is the CSS part that you put in the head part of your HTML files:</p>
+           <div class="card mrg grey lighten-2" style="display: inline-block; word-break: break-word;">
+                  <pre style="white-space: pre-wrap;">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css&quot;&gt;</pre>
+            </div>
+             <p>This is the JavaScript part you put before the end of your body tag:</p>
+           <div class="card mrg grey lighten-2" style="display: inline-block; word-break: break-word;">
+                  <pre style="white-space: pre-wrap;">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js&quot;&gt;&lt;/script&gt;</pre>
+            </div>
+        </div>
+      </div>
+      <div class="card-image">
+        <img src="/static/images/stepm1new.jpg">
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <!-- Compiled and minified JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    const slide_menu = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(slide_menu, {});
+  </script>
+</body>
+</html>
